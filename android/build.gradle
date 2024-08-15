@@ -38,21 +38,6 @@ def shouldUseNameSpace = agpVersion >= 8
 def PACKAGE_PROP = "package=\"com.reactnativepagerview\""
 def manifestOutFile = file("${projectDir}/src/main/AndroidManifest.xml")
 def manifestContent = manifestOutFile.getText()
-if(shouldUseNameSpace){
-      manifestContent = manifestContent.replaceAll(
-        PACKAGE_PROP,
-        ''
-    )  
-} else {
-    if(!manifestContent.contains("$PACKAGE_PROP")){
-        manifestContent = manifestContent.replace(
-            '<manifest',
-            "<manifest $PACKAGE_PROP "
-        )
-    }
-}
-manifestContent.replaceAll("  ", " ")
-manifestOutFile.write(manifestContent)
 
 import groovy.json.JsonSlurper
 
@@ -80,12 +65,11 @@ def appProject = rootProject.allprojects.find { it.plugins.hasPlugin('com.androi
 
 android {
   compileSdkVersion getExtOrIntegerDefault('compileSdkVersion')
-  if (shouldUseNameSpace){
-    namespace = "com.reactnativepagerview"
+    namespace "com.reactnativepagerview"
     buildFeatures {
       buildConfig true
     }
-  }
+
   defaultConfig {
     minSdkVersion getExtOrIntegerDefault('minSdkVersion')
     targetSdkVersion getExtOrIntegerDefault('targetSdkVersion')
