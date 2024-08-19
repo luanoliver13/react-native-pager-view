@@ -3,6 +3,9 @@ import { StyleSheet, View } from 'react-native';
 
 export const LEGACY_childrenWithOverriddenStyle = (children?: ReactNode) => {
   return Children.map(children, (child) => {
+    if (!child) {
+      return null;
+    };
     const element = child as React.ReactElement;
     return (
       // Add a wrapper to ensure layout is calculated correctly
@@ -23,6 +26,9 @@ export const childrenWithOverriddenStyle = (
   pageMargin = 0
 ) => {
   return Children.map(children, (child) => {
+    if (!child) {
+      return null;
+    };
     return (
       <View
         style={{
